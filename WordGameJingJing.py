@@ -34,8 +34,8 @@ def showWindowMenu1():
     window1 = Tk()  
     window1.geometry('1000x400')  
     window1.title('PLAY')
-    window1.after(5000,sc())
-    window1.after(5000,sc())
+    window1.after(1000,sc())
+    window1.after(1000,sc())
     user = Label(window1,text = username.get()+"    Score :     "+str(score),font=('Tahoma', 20, 'bold')).place(x=0,y=0)
     '''
     myMenu1 = Menu()
@@ -57,6 +57,7 @@ def showWindowMenu2():
     canvas2 = Canvas( window2, width = 1000,height = 400)
     canvas2.pack(fill = "both", expand = True)
     canvas2.create_image( 0, 0, image = bg2,  anchor = "nw")
+    myLable4 = Button(text="BACK",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0").place(x=30, y=320)
 
     window2.mainloop()
 def showWindowMenu3():
