@@ -50,6 +50,7 @@ def showWindowMenu1():
     window1.mainloop()
 
 def showWindowMenu2():
+    global window2
     window2 =Tk()
     window2.title("HOW TO")
     window2.geometry("1000x400")
