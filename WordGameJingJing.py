@@ -16,6 +16,8 @@ from secrets import randbelow
 import asyncio
 from random import shuffle
 import glob
+from playsound import playsound
+#import winsound
 showStr = lambda L: ' '.join(map(str, L))
 
 '''
@@ -234,13 +236,13 @@ def validateLogin(username):
    print("username entered :", username.get())
    return
 
-def quit1():
-        root.destroy()
-
-def quit2():
-        window2.destroy()
-def quit3():
-        window1.destroy()
+def quitMainmenu():
+        mainmenu.destroy()
+def quitHowto():
+        howto.destroy()
+def quitPlaygame():
+        playgame.destroy()
+        
 d = MyQueue()
 def Input(group):
     fileName = group
@@ -251,100 +253,92 @@ def Check():
     #
     ch1 = Adjective.get()
     if ch1 == 1:
-        Label(text="select Adjective").pack()
+        #Label(text="select Adjective").pack()
         print('run file Adjective')
         Input('Adjective')
 
     ch2 = Animal.get()
     if ch2 == 1:
-        Label(text="select Animal").pack()
+       # Label(text="select Animal").pack()
         print('run file Animal')
         Input('Animal')
     ch3 = CarBrandName.get()
     if ch3 == 1:
-        Label(text="select CarBrandName").pack()
-        print('run file CarBrandName')
-        Input('CarBrandName')
-    ch4 = CarID_Model.get()
-    if ch4 == 1:
-        Label(text="select CarID_Model").pack()
+       # Label(text="select CarID_Model").pack()
         print('run file CarID_Model')
         Input('CarID_Model')
     ch5 = CarModel.get()
     if ch5 == 1:
-        Label(text="select CarModel").pack()
+       # Label(text="select CarModel").pack()
         print('run file CarModel')
         Input('CarModel')
     ch6 = Country.get()
     if ch6 == 1:
-        Label(text="select Country").pack()
+       # Label(text="select Country").pack()
         print('run file Country')
         Input('Country')
     ch7 = Fruits.get()
     if ch7 == 1:
-        Label(text="select Fruits").pack()
+      #  Label(text="select Fruits").pack()
         print('run file Fruits')
         Input('Fruits')
     ch8 = Laptop.get()
     if ch8 == 1:
-        Label(text="select Laptop").pack()
+      #  Label(text="select Laptop").pack()
         print('run file Laptop')
         Input('Laptop')
 
 def showMainMenu():
-    global root
-
+    global mainmenu
     global pinPhoto1
-    root = Tk()
-    root.geometry("1000x400")
-    root.resizable(width=False, height=False)
-    pinPhoto1 = Label(root,bg = "#E9E8C8")
-    #bg1 = PhotoImage(file = "pic/st2.png")
+    #global x
+    #x=1
+    #print(x)
+    mainmenu = Tk()
 
-    root.title("Game")
+    mainmenu.title("Game")
+    mainmenu.geometry("1000x400")
+    mainmenu.resizable(width=False, height=False)
+    pinPhoto1 = Label(mainmenu,bg = "#E9E8C8")
     pinPhoto1.place(x = 0, y = 0)
     image=Image.open("pic/st2.png")
-    #image = image.resize((1000, 400), Image.ANTIALIAS)
     picture = ImageTk.PhotoImage(image)
     pinPhoto1["image"] = picture
     pinPhoto1.image = picture
-    #canvas1 = Canvas( root, width = 1000,height = 400)
-    #canvas1.pack(fill = "both", expand = True)
-    #canvas1.create_image( 0, 0, image = bg1,  anchor = "nw")
-    usernameLabel = Label(root, text="User Name",fg="#FAAF30",font=('Tahoma', 15, 'bold'),bg="#FFF6F0").place(x=427, y=100)
+    usernameLabel = Label(mainmenu, text="User Name",fg="#FAAF30",font=('Tahoma', 15, 'bold'),bg="#FFF6F0").place(x=427, y=100)
     
     global username
     username = StringVar()
-    usernameEntry = Entry(root, textvariable=username).place(x=547, y=110)
-    buttonN()
+    usernameEntry = Entry(mainmenu, textvariable=username).place(x=547, y=110)
     global validateLogin
     validateLogin = partial(validateLogin, username)
-    cWin()
-    root.mainloop()
+    
+   # button_1 = Button(text="PLAY",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showPlaygame()]).place(x=537, y=175)
+    button_1 = Button(text="PLAY",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showPlaygame()]).place(x=537, y=175)
+    button_2 = Button(text="HOW TO",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showHowto()]).place(x=514, y=245)
+    button_3 = Button(text="EXIT",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command = quitMainmenu).place(x=539, y=315)
+    button_song = Button(text="song",fg="red",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command = play).place(x=905, y=340)
+    mainmenu.mainloop()
+    
+   # lambda:[mainmenu.mainloop()]
+def play():
+    playsound('s1.mp3')
 
-def showWindowMenu1():
-    global window1 
-    window1 = Tk()  
-    pinPhotomode = Label(window1,bg = "#E9E8C8")
-    window1.geometry('1000x400')
-    window1.resizable(width=False, height=False)
-    window1.title('PLAY')
-    #bg3 = PhotoImage(file = "pic/mode.png")
+def showPlaygame():
+    global playgame
+    playgame = Tk()
+    playgame.title('PLAY')
+    playgame.geometry('1000x400')
+    playgame.resizable(width=False, height=False)
 
+    pinPhotomode = Label(playgame,bg = "#E9E8C8")
     pinPhotomode.place(x = 0, y = 0)
     image=Image.open("pic/mode.png")
-    #image = image.resize((1000, 400), Image.ANTIALIAS)
     picture = ImageTk.PhotoImage(image)
     pinPhotomode["image"] = picture
     pinPhotomode.image = picture
 
-    #canvas3 = Canvas( window1, width = 1000,height = 400)
-    #canvas3.pack(fill = "both", expand = True)
-    #canvas3.create_image( 0, 0, image = bg3,  anchor = "nw")
-    #window1.after(1000,sc())
-    #window1.after(1000,sc())
-
-    user = Label(window1,text = username.get()+"    Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
+    user = Label(playgame,text = username.get()+"    Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
     global Adjective
     Adjective = IntVar()
     Checkbutton(text = "Adjective",fg="#FAAF30",font=('Tahoma', 10, 'bold'),bg="#FFF6F0",activebackground='#FFF6F0',activeforeground="red",variable = Adjective).place(x=100,y=120)
@@ -370,81 +364,46 @@ def showWindowMenu1():
     Laptop = IntVar()
     Checkbutton(text = "Laptop",fg="#FAAF30",font=('Tahoma', 10, 'bold'),bg="#FFF6F0",activebackground='#FFF6F0',activeforeground="red",variable = Laptop).place(x=320,y=330)
 
-    '''
-    myMenu1 = Menu()
-    menuItem1 = Menu(tearoff=0)
-    menuItem1.add_command(label="Hard" , command=lambda:[quit2(),showWindowMenu4()])
-    menuItem1.add_command(label="Normal")
-    menuItem1.add_command(label="Easy")
-    myMenu1.add_cascade(label="Mode",menu=menuItem1,)
-    window1.config(menu=myMenu1)
-    '''
-    myLable5 = Button(text="PLAY",fg="#FFF6F0",font=('Tahoma', 20, 'bold'),bg="#FAAF30",activebackground='#FFF6F0',activeforeground="#FAAF30",command=lambda:[Check()]).place(x=880, y=320)
-    window1.mainloop()
+    myLable5 = Button(text="PLAY",fg="#FFF6F0",font=('Tahoma', 20, 'bold'),bg="#FAAF30",activebackground='#FFF6F0',activeforeground="#FAAF30",command=lambda:[Check(),showgame()]).place(x=880, y=320)
+    playgame.mainloop()
 
 def hide(x):
     x.pack_forget()
 
-def showWindowMenu2():
-    global window2
-    window2 =Tk()
-    pinPhotohowto = Label(window2,bg = "#E9E8C8")
-    window2.title("HOW TO")
-    window2.geometry("1000x400")
-    window2.resizable(width=False, height=False)
-    #bg2 = PhotoImage(file = "pic/howto.png")
+def showHowto():
+    global howto
+    howto = Tk()
+    
+    howto.title("HOW TO")
+    howto.geometry("1000x400")
+    howto.resizable(width=False, height=False)
+    pinPhotohowto = Label(howto,bg = "#E9E8C8")
     pinPhotohowto.place(x = 0, y = 0)
     image=Image.open("pic/howto.png")
-    #image = image.resize((1000, 400), Image.ANTIALIAS)
     picture = ImageTk.PhotoImage(image)
     pinPhotohowto["image"] = picture
     pinPhotohowto.image = picture
-    #canvas2 = Canvas( window2, width = 1000,height = 400)
-    #canvas2.pack(fill = "both", expand = True)
-    #canvas2.create_image( 0, 0, image = bg2,  anchor = "nw")
  
     global myLable4
-    myLable4 = Button(text="BACK",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quit2(),showMainMenu()]).place(x=30, y=320)
-
-    window2.mainloop()
+    myLable4 = Button(text="BACK",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitHowto(),showMainMenu()]).place(x=30, y=320)
+    
+    howto.mainloop()
+    
 def showWindowMenu3():
     window3 =Tk()
     window3.title("SCORE")
     window3.geometry("1000x400")
     window3.resizable(width=False, height=False)
     window3.mainloop()
-def showWindowMenu4():
+def showgame():
     window4 =Tk()
-    window4.title("HARD")
+    window4.title("GAME")
     window4.geometry("1000x400")
     window4.resizable(width=False, height=False)
-    user = Label(window4,text = username.get()+"    Score :",font=('Tahoma', 20, 'bold')).place(x=0,y=0)
+    user = Label(playgame,text = username.get()+"    Score :     "+str(score),fg="red",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
     window4.mainloop()
-    myMenu2 = Menu()
-    menuItem2 = Menu(tearoff=0)
-    menuItem2.add_command(label="Food")
-    menuItem2.add_command(label="Animal")
-    menuItem2.add_command(label="Fruit")
-    menuItem2.add_command(label="Internal Organs")
-    menuItem2.add_command(label="Family")
-    menuItem2.add_command(label="Occupations")
-    menuItem2.add_command(label="Places")
-    myMenu2.add_cascade(label="Category",menu=menuItem2)
-    window4.config(menu=myMenu2)
-    window4.mainloop()
-def cWin():
-    global check
-    if check == True:
-        print("window on")
-        root.geometry("1000x400")
-        check = False
-    return check
+  
 
-def buttonN():
-    myLable1 = Button(text="PLAY",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[validateLogin(),quit1(),showWindowMenu1()]).place(x=537, y=175)
-    myLable2 = Button(text="HOW TO",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quit1(),showWindowMenu2()]).place(x=514, y=245)
-    myLable3 = Button(text="EXIT",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command = quit1).place(x=539, y=315)
-    return
 
 def main():
     animation = App(game)
@@ -468,8 +427,6 @@ def main():
 #https://stackoverflow.com/questions/23949906/highscores-using-python-saving-10-highscores-and-ordering-them 
 
 #-----------------------------------------------Main
-
-check = True
 score = 0
-highscore_read()
 showMainMenu()
+play()
