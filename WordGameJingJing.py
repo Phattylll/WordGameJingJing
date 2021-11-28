@@ -1,3 +1,4 @@
+
 from tkinter import *
 from os import access, close, path, read
 from tkinter.colorchooser import *
@@ -17,7 +18,7 @@ import asyncio
 from random import shuffle
 import glob
 from playsound import playsound
-#import winsound
+import winsound
 showStr = lambda L: ' '.join(map(str, L))
 
 '''
@@ -317,12 +318,13 @@ def showMainMenu():
     button_1 = Button(text="PLAY",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showPlaygame()]).place(x=537, y=175)
     button_2 = Button(text="HOW TO",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showHowto()]).place(x=514, y=245)
     button_3 = Button(text="EXIT",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command = quitMainmenu).place(x=539, y=315)
-    button_song = Button(text="song",fg="red",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command = play).place(x=905, y=340)
+    #button_song = Button(text="song",fg="red",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command = play).place(x=905, y=340)
+    #play()
     mainmenu.mainloop()
     
    # lambda:[mainmenu.mainloop()]
 def play():
-    playsound('s1.mp3')
+    winsound.PlaySound('s1.wav',winsound.SND_ASYNC)
 
 def showPlaygame():
     global playgame
@@ -400,7 +402,7 @@ def showgame():
     window4.title("GAME")
     window4.geometry("1000x400")
     window4.resizable(width=False, height=False)
-    user = Label(playgame,text = username.get()+"    Score :     "+str(score),fg="red",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
+    userplay = Label(window4,text = username.get()+"    Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
     window4.mainloop()
   
 
@@ -428,5 +430,5 @@ def main():
 
 #-----------------------------------------------Main
 score = 0
-showMainMenu()
 play()
+showMainMenu()
