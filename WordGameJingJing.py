@@ -158,7 +158,7 @@ def showMainMenu():
     y_start = 110
     while (isEmpty(scoreData_sorted) == False) and (order_score > 0):
         score_1 = pop(scoreData_sorted)
-        textScore = "No."+str(order)+". score : "+score_1[1] + " " + score_1[0]
+        textScore = "No."+str(order)+". score : "+score_1[1] + " " + score_1[0][0:6]
         LabelScore_1 = Label(mainmenu, text=textScore, fg="#FFF6F0",font=('Tahoma', 13, 'bold'),bg="#FAAF30").place(x=750, y=y_start) #x = 750 y= 25+
         y_start += 25
         order_score -= 1
@@ -222,8 +222,10 @@ def showSelectWorld():
     Checkbutton(text = "Laptop",fg="#FAAF30",font=('Tahoma', 10, 'bold'),bg="#FFF6F0",activebackground='#FFF6F0',activeforeground="red",variable = Laptop).place(x=320,y=330)
 
     myLable5 = Button(text="PLAY",fg="#FFF6F0",font=('Tahoma', 20, 'bold'),bg="#FAAF30",activebackground='#FFF6F0',activeforeground="#FAAF30",command=lambda:[quitSelectWorld(),showGame()]).place(x=880, y=320)
+    back = Button(text="BACK",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[backmain(),showMainMenu()]).place(x=750, y=320)
     selectworld.mainloop()
-
+    
+    
 def showHowto():
     global howto
     howto = Tk()
@@ -316,7 +318,7 @@ def showGame():
     showgame.focus_force()
     countdowntime(60)
     userplay = Label(showgame,text = "   "+username.get()+"  Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
-    
+   
     Check()
     
     #inp = GameInput(showgame)
@@ -472,6 +474,9 @@ def quitMainmenu():
         mainmenu.destroy()
 def quitHowto():
         howto.destroy()
+def backmain():
+    selectworld.destroy()
+
 def quitSelectWorld():
         selectworld.destroy()
 def quitShowgame():
