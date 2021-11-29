@@ -16,7 +16,7 @@ from secrets import randbelow
 import asyncio
 from random import shuffle
 import glob
-from playsound import playsound
+#from playsound import playsound
 import winsound
 showStr = lambda L: ' '.join(map(str, L))
 
@@ -179,7 +179,7 @@ def showMainMenu():
     mainmenu.mainloop()
 
 def play():
-    winsound.PlaySound('s1.wav',winsound.SND_ASYNC)
+    winsound.PlaySound('s1.wav',winsound.SND_LOOP+winsound.SND_ASYNC)
 
 def showSelectWorld():
     global selectworld
@@ -440,7 +440,7 @@ def countdowntime(count_time):
     else:
         confirm = tkinter.messagebox.showerror("Game Over !","press ok to exit")
         
-        #เก็บคะแนน ====================================================
+        #เก็บคะแนน ===================================================
         check_username  = False
         scoredatatmp = [] #เอาไว้ดึงข้อมูลใน score.txt มาเก็บไว้ใน list
         with open("score.txt") as file_in: #เช็คว่าใน score.txt มีชื่อซ้ำไหมถ้ามีให้แก้เป็นของใหม่
