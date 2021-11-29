@@ -20,8 +20,6 @@ from playsound import playsound
 import winsound
 showStr = lambda L: ' '.join(map(str, L))
 
-showStr = lambda L: ' '.join(map(str, L))
-
 word = ''
 n = 0
 ip = ''
@@ -29,6 +27,79 @@ index = 0
 num = 0
 start_pic = True
 state = "idle"
+
+# Python program to sort a  
+# stack using auxiliary stack. 
+  
+# This function return the sorted stack 
+def sortStack ( stack ): 
+    tmpStack = createStack() 
+    while(isEmpty(stack) == False): 
+          
+        # pop out the first element 
+        tmp = top(stack) 
+        pop(stack) 
+  
+        # while temporary stack is not 
+        # empty and top of stack is 
+        # greater than temp 
+        while(isEmpty(tmpStack) == False and int(top(tmpStack)[1]) > int(tmp[1])): 
+              
+            # pop from temporary stack and 
+            # push it to the input stack 
+            push(stack,top(tmpStack)) 
+            pop(tmpStack) 
+  
+        # push temp in tempory of stack 
+        push(tmpStack,tmp) 
+      
+    return tmpStack 
+  
+# Below is a complete running  
+# program for testing above 
+# function. 
+  
+# Function to create a stack.  
+# It initializes size of stack 
+# as 0 
+def createStack(): 
+    stack = [] 
+    return stack 
+  
+# Function to check if  
+# the stack is empty 
+def isEmpty( stack ): 
+    return len(stack) == 0
+  
+# Function to push an  
+# item to stack 
+def push( stack, item ): 
+    stack.append( item ) 
+  
+# Function to get top  
+# item of stack 
+def top( stack ): 
+    p = len(stack) 
+    return stack[p-1] 
+  
+# Function to pop an  
+# item from stack 
+def pop( stack ): 
+  
+    # If stack is empty 
+    # then error 
+    if(isEmpty( stack )): 
+        print("Stack Underflow ") 
+        exit(1) 
+  
+    return stack.pop() 
+  
+# Function to print the stack 
+def prints(stack): 
+    for i in range(len(stack)-1, -1, -1): 
+        print(stack[i], end = ' ') 
+    print() 
+    
 
 class MyQueue(asyncio.Queue):
 
@@ -72,6 +143,28 @@ def showMainMenu():
     pinPhoto1.image = picture
     usernameLabel = Label(mainmenu, text="User Name",fg="#FAAF30",font=('Tahoma', 15, 'bold'),bg="#FFF6F0").place(x=427, y=100)
     
+    #อ่านคะแนน
+    with open("score.txt") as file_in:
+        for line in file_in:
+            scoreRead = line.split()
+            push( scoreData, scoreRead )
+    prints(scoreData)
+    scoreData_sorted = sortStack(scoreData)
+    prints(scoreData_sorted)
+    
+    #เขียนลง Tk
+    order_score = 10
+    order = 1
+    y_start = 110
+    while (isEmpty(scoreData_sorted) == False) and (order_score > 0):
+        score_1 = pop(scoreData_sorted)
+        textScore = "No."+str(order)+". score : "+score_1[1] + " " + score_1[0]
+        LabelScore_1 = Label(mainmenu, text=textScore, fg="#FFF6F0",font=('Tahoma', 13, 'bold'),bg="#FAAF30").place(x=750, y=y_start) #x = 750 y= 25+
+        y_start += 25
+        order_score -= 1
+        order += 1
+    
+    sc = Label(mainmenu,text="HIGH SOCRE", fg="#FFF6F0",font=('Tahoma', 25, 'bold'),bg="#FAAF30").place(x=745, y=65)
     global username
     username = StringVar()
     usernameEntry = Entry(mainmenu, textvariable=username).place(x=547, y=110)
@@ -102,7 +195,7 @@ def showSelectWorld():
     pinPhotomode["image"] = picture
     pinPhotomode.image = picture
 
-    user = Label(selectworld,text = username.get()+"    Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
+    user = Label(selectworld,text = "   "+username.get()+"  Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
     global Adjective
     Adjective = IntVar()
     Checkbutton(text = "Adjective",fg="#FAAF30",font=('Tahoma', 10, 'bold'),bg="#FFF6F0",activebackground='#FFF6F0',activeforeground="red",variable = Adjective).place(x=100,y=120)
@@ -158,6 +251,8 @@ def showWindowMenu3():
     window3.mainloop()
     
 # ===============================================================================================
+
+
 def onKeyPress(event):
     print("Key press : ",event.char)
     global index
@@ -169,9 +264,9 @@ def onKeyPress(event):
         if index != len(word):
             ip += event.char
             if event.char == word[index]:
-                Label(showgame, text=word[index], font='30', fg='black', bg = "#E9E8C8").grid(row=3, column=index)
+                Label(showgame, text=word[index], font='30', fg='Green', bg = "#FFF6F0").grid(row=3, column=index)
             else:
-                Label(showgame, text=word[index], font='30', fg='red', bg = "#E9E8C8").grid(row=3, column=index)
+                Label(showgame, text=word[index], font='30', fg='red', bg = "#FFF6F0").grid(row=3, column=index)
             index += 1
 
 def pressBackSpace(event):
@@ -182,7 +277,7 @@ def pressBackSpace(event):
     if index != 0:
         index -= 1
         ip = ip[:-1]
-        Label(showgame, text=word[index], font='30', fg='grey', bg = "#E9E8C8").grid(row=3, column=index)
+        Label(showgame, text=word[index], font='30', fg='grey', bg = "#FFF6F0").grid(row=3, column=index)
 
 def pressEnter(event):
     global index
@@ -190,18 +285,21 @@ def pressEnter(event):
     global word
     global ip
     global start_pic
+    global score
     start_pic = False
-    Label(showgame, text='                   ',font = '30', bg = "#E9E8C8").place(x=0, y=35)
+    Label(showgame, text='                   ',font = '30', bg = "#FFF6F0").place(x=0, y=35)
     if ip == word:
-        Label(showgame,text='correct',fg = 'green',font = '30', bg = "#E9E8C8").place(x=0,y=35)
+        Label(showgame,text='correct',fg = 'green',font = '30', bg = "#FFF6F0").place(x=0,y=35)
+        score +=1
+        Label(showgame,text = "   "+username.get()+"  Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
         #animation.playstage_good()
     else: 
-        Label(showgame,text='not correct',fg = 'red',font = '30', bg = "#E9E8C8").place(x=0,y=35)
+        Label(showgame,text='not correct',fg = 'red',font = '30', bg = "#FFF6F0").place(x=0,y=35)
         #animation.playstage_bad()
     ip = ''
     index = 0
-    #worldWords.showWorld()
-    #inp.showWord()
+    showWorld()
+
 
 def nothing(event):
     print('shift')
@@ -216,8 +314,8 @@ def showGame():
     showgame.geometry("1000x400")
     showgame.resizable(width=False, height=False)
     showgame.focus_force()
-    countdowntime(20)
-    userplay = Label(showgame,text = username.get()+"    Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
+    countdowntime(60)
+    userplay = Label(showgame,text = "   "+username.get()+"  Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
     
     Check()
     
@@ -228,7 +326,11 @@ def showGame():
     showgame.bind('<KeyPress-Shift_L>',nothing) #กดShiftแล้วมันเข้า sp char ด้วย เลยต้องดัก shift ไว้ตรงนี้
     showgame.bind('<KeyPress-Shift_R>',nothing)
     showgame.bind("<KeyPress>",onKeyPress)
-    
+    showgame.config(bg = "#FFF6F0")
+
+
+    for i in range(0,3):
+        Label(showgame,text='',bg = "#FFF6F0").grid(row= i, column = 0)
     showWorld()
     
     showgame.mainloop()
@@ -317,24 +419,49 @@ def showWorld():
     global word
     word = asyncio.run(getWorld(deeee))[0]
     print(f'Get word = {word}')
-    
+
     for count in range(0,20):
-        Label(showgame, text=' ', font='30',bg = "#E9E8C8").grid(row = 3, column = count)
+        Label(showgame, text=' ', font='30',bg = "#FFF6F0").grid(row = 3, column = count)
     for count in range(0,len(word)):
-        Label(showgame,text=word[count],font = '30',fg = 'grey',bg = "#E9E8C8").grid(row = 3,column = count)
-    Label(showgame, text='                                                                           ', font='30', bg = "#E9E8C8").place(x=0, y=90)
+        Label(showgame,text=word[count],font = '30',fg = 'grey',bg = "#FFF6F0").grid(row = 3,column = count)
+    Label(showgame, text='                                                                           ',bg = "#FFF6F0").place(x=0, y=90)
     
 def countdowntime(count_time):
-    labeltime = Label(showgame,text=count_time,font = '20',background="#E9E8C8").place(x=930,y=0)
-
+    t= Label(showgame,text="Time : ",fg="#FAAF30",font=('Tahoma', 20, 'bold'),background="#FFF6F0").place(x=830,y=0)
+    labeltime = Label(showgame,text=count_time,fg="#FAAF30",font=('Tahoma', 20, 'bold'),background="#FFF6F0").place(x=930,y=0)
     if(count_time==9):  #แก้บัค:ตัวเลขซ้อน 
-        Label(text="9 ",font = '20',bg="#E9E8C8").place(x=933,y=0)
+        Label(text="9   ",fg="#FAAF30",font=('Tahoma', 20, 'bold'),background="#FFF6F0").place(x=930,y=0)
     
     if(count_time > 0):
         showgame.after(1000,countdowntime,count_time-1)
 
     else:
         confirm = tkinter.messagebox.showerror("Game Over !","press ok to exit")
+        
+        #เก็บคะแนน ====================================================
+        check_username  = False
+        scoredatatmp = [] #เอาไว้ดึงข้อมูลใน score.txt มาเก็บไว้ใน list
+        with open("score.txt") as file_in: #เช็คว่าใน score.txt มีชื่อซ้ำไหมถ้ามีให้แก้เป็นของใหม่
+                for line in file_in:
+                    scoreRead = line.split()
+                    if scoreRead[0].lower() == username.get().lower():
+                        check_username = True
+                        if int(scoreRead[1]) < score:
+                            scoreRead[1] = str(score)
+                            scoredatatmp.append(scoreRead)
+                        else:
+                            scoredatatmp.append(scoreRead)
+                    else:
+                        scoredatatmp.append(scoreRead)
+                
+        if(check_username == False): #ถ้าไม่มีอยู่แล้วให้ใส่ชื่อเข้าไปใหม่
+            scoredatatmp.append([username.get(), str(score)])
+
+        with open('score.txt', 'w') as f: #เขียนข้อมูลใน list ที่เก็บ scoredatatmp ไว้ลง txt
+            for item in scoredatatmp:
+                f.write(item[0] + "  " + item[1]+"\n")
+        # ============================================================
+        
         if(confirm=="ok"):
             showgame.destroy()
             
@@ -363,5 +490,6 @@ def highscore_write():
 # จุดเริ่มต้นโปรแกรม
 if __name__ == '__main__':
     score = 0
+    scoreData = createStack()
     play()
     showMainMenu()
