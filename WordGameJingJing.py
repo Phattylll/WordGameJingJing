@@ -1,4 +1,3 @@
-
 from tkinter import *
 from os import access, close, path, read
 from tkinter.colorchooser import *
@@ -21,143 +20,16 @@ from playsound import playsound
 import winsound
 showStr = lambda L: ' '.join(map(str, L))
 
-'''
-text = ['first', 'second', 'third', 'forth', 'fifth', 'sixth', 'seventh']
-word = text[0]
-ip = ""
+showStr = lambda L: ' '.join(map(str, L))
+
+word = ''
+n = 0
+ip = ''
 index = 0
 num = 0
 start_pic = True
-game = Tk()
 state = "idle"
-class GameInput:
-    
-    def __init__(self, key):
-        self.active_animation = True
-        self.c = Label(game, bg = "#E9E8C8")
-        for i in range(0, 3):
-            Label(game, text = "",background="#E9E8C8").grid(row = i, column = 0)
-        self.showWord()
-        animation.run()
-    def showWord(self):
-        global word
-        for n in range(0, 20):
-            Label(game, text = " ", font = "30",background="#E9E8C8").grid(row = 3, column = n)
-        for n in range(0, len(word)):
-            Label(game, text = word[n], font = "30", fg = "grey",background="#E9E8C8").grid(row = 3, column = n)
-        Label(game, text = '                                      ', font = "30",background="#E9E8C8").place(x = 0, y = 90)
-        Label(game, text = f'Next word : {text[num + 1]}', font = "30",background="#E9E8C8").place(x = 0, y = 90)
-    def onKeyPress(self, event):
-        global index, ip
-        if index != len(word):
-            ip += event.char
-            if event.char == word[index]:
-                Label(game, text = word[index], font = "30", fg = "black",background="#E9E8C8").grid(row = 3, column = index)
-            else:
-                Label(game, text = word[index], font = "30", fg = "red",background="#E9E8C8").grid(row = 3, column = index)
-            index += 1
-        print(event.char)
-    def pressBackSpace(self, event):
-        global index, ip
-        print("backspace")
-        if index != 0:
-            index -= 1
-            ip = ip[:-1]
-            Label(game, text = word[index], font = "30", fg = "grey",background="#E9E8C8").grid(row = 3, column = index)
-        
-    def pressEnter(self, event):
-        global index, num, word, ip, start_pic, state
-        Label(game, text = '                   ', font = "30",background="#E9E8C8").place(x = 0, y = 35)
-        start_pic = False
-        if ip == word:
-            state = "good"
-            print("correct")
-            Label(game, text = "correct", fg = "green", font = "30",background="#E9E8C8").place(x = 0, y = 35)
-            animation.run()
-        else:
-            state = "bad"
-            print("incorrect")
-            Label(game, text = "incorrect", fg = "red", font = "30",background="#E9E8C8").place(x = 0, y = 35)
-            animation.run()
-        ip = ""
-        index = 0
-        num += 1
-        word = text[num]
-        self.showWord()
-class App(GameInput):
-    def __init__(self, key):
-        self.currentFrame_good = 0
-        self.currentFrame_bad = 179
-        self.currentFrame_default = 255
-        self.break_good = 0
-        self.pinPhoto = Label(game, bg = "#E9E8C8")
-   # def playsong(self):
-    #    winsound.PlaySound("//Users//Pun Punyawat//OneDrive//Desktop//2D//datastr//game//song_noodle.wav",winsound.SND_ASYNC)
-        
-    def run(self):
-        global state, start_pic
-        if state == "idle":
-            #print("idle work")
-            self.pinPhoto.place(x = 10, y = 200)
-            time.sleep(0.02)
-            self.currentFrame_default += 1
-            image=Image.open("pic_png/animation_png/default/eat-"+str(self.currentFrame_default)+".png")
-            image = image.resize((480, 400), Image.ANTIALIAS)
-            picture = ImageTk.PhotoImage(image)
-            self.pinPhoto["image"] = picture
-            self.pinPhoto.image = picture
-            if self.currentFrame_default == 271:
-                self.currentFrame_default = 255
-                #state = "idle"
-                print(state)
-            if state == "idle":
-                game.after(10, self.run)
-        elif state == "good":
-            #print("good work")
-            self.pinPhoto.place(x = 10, y = 200)
-            time.sleep(0.02)
-            self.currentFrame_good += 1
-            image=Image.open("pic_png/animation_png/good//eat-"+str(self.currentFrame_good)+".png")
-            image = image.resize((480, 400), Image.ANTIALIAS)
-            picture = ImageTk.PhotoImage(image)
-            self.pinPhoto["image"] = picture
-            self.pinPhoto.image = picture
-            if self.currentFrame_good == 40:
-                self.currentFrame_good = 0
-                state = "idle"
-                #start_pic = True
-                print(state)
-                return 
-            if state == "good":
-                game.after(10, self.run)
-        elif state == "bad":
-            #print("bad work")
-            self.pinPhoto.place(x = 10, y = 200)
-            time.sleep(0.02)
-            self.currentFrame_bad += 1
-            image=Image.open("pic_png//animation_png//bad//eat-"+str(self.currentFrame_bad)+".png")
-            image = image.resize((480, 400), Image.ANTIALIAS)
-            picture = ImageTk.PhotoImage(image)
-            self.pinPhoto["image"] = picture
-            self.pinPhoto.image = picture
-            if self.currentFrame_bad == 220:
-                self.currentFrame_bad = 179
-                state = "idle"
-                #start_pic = True
-                print(state)
-                return
-            if state == "bad":
-                game.after(10, self.run)
-    def countdowntime(self,count_time):
-        labeltime = Label(game,text=count_time,background="#E9E8C8");
-        labeltime.place(x=250,y=150);
-        if(count_time > 0):
-            game.after(1000,self.countdowntime,count_time-1);
-        else:
-            confirm = tkinter.messagebox.showerror("Game Over !","press ok to exit")
-            if(confirm=="ok"):
-                game.destroy()   # ani.countdowntime(15) #นับเวลา
-'''
+
 class MyQueue(asyncio.Queue):
 
     def __init__(self):
@@ -167,66 +39,13 @@ class MyQueue(asyncio.Queue):
         if self._queue is not self.empty():
          shuffle(self._queue)
         else: return None
+        
+deeee = MyQueue()
 
 def ConvertString(string):
     tolist=[]
     tolist[:0]=string
     return tolist
-
-def worldSearch(inpFileName):
-    csvFiles = []
-    for file in glob.glob('DataWorld/AllWorld/*.csv'):
-        directory = file.replace('DataWorld/AllWorld\\', '')
-        directory =directory.replace('.csv', '')
-        #directory = directory.strip('.csv')
-        csvFiles.append(directory)
-    print(csvFiles)
-    for i in range(len(csvFiles)):
-        if str(csvFiles[i]) == str(inpFileName):
-            return csvFiles[i]
-        else :
-            if i == (len(csvFiles)-1):
-                return None
-            else: pass
-
-
-async def worldSelect(obj,fileName) :
-    print(f'Name : {fileName}')
-    if fileName is not None :
-        with open('DataWorld/AllWorld/'+fileName+'.csv', newline='') as f:
-            reader = csv.reader(f)
-            temp = list(reader)
-            while len(temp) != 0:
-                pos = randbelow(len(temp))
-                # output type
-                await obj.put(temp[pos])
-                #await obj.put(ConvertString(showStr(temp[pos])))
-                del temp[pos]
-    else:
-        print("Not found")
-        return -1
-
-
-async def getWorld(obj):
-    obj.shuffle()
-    #print(obj.__str__())
-    while not obj.empty():
-        tempGet = await  obj.get()
-        Label(text=tempGet[0]).pack()
-        return tempGet
-
-
-#https://stackoverflow.com/questions/23949906/highscores-using-python-saving-10-highscores-and-ordering-them    hiscore
-
-def highscore_read():
-    with open('highscores.txt', 'r') as f:
-        for line in f:
-            print(line.split())
-
-def highscore_write():
-    with open('highscores.txt', 'r') as f:
-        for line in f:
-            print(line.split())
 
 def sc():
     global score
@@ -236,65 +55,10 @@ def sc():
 def validateLogin(username):
    print("username entered :", username.get())
    return
-
-def quitMainmenu():
-        mainmenu.destroy()
-def quitHowto():
-        howto.destroy()
-def quitPlaygame():
-        playgame.destroy()
         
-d = MyQueue()
-def Input(group):
-    fileName = group
-    asyncio.run(worldSelect(d, worldSearch(fileName)))
-def Check():
-
-    #while d.empty() is False:
-    #
-    ch1 = Adjective.get()
-    if ch1 == 1:
-        #Label(text="select Adjective").pack()
-        print('run file Adjective')
-        Input('Adjective')
-
-    ch2 = Animal.get()
-    if ch2 == 1:
-       # Label(text="select Animal").pack()
-        print('run file Animal')
-        Input('Animal')
-    ch3 = CarBrandName.get()
-    if ch3 == 1:
-       # Label(text="select CarID_Model").pack()
-        print('run file CarID_Model')
-        Input('CarID_Model')
-    ch5 = CarModel.get()
-    if ch5 == 1:
-       # Label(text="select CarModel").pack()
-        print('run file CarModel')
-        Input('CarModel')
-    ch6 = Country.get()
-    if ch6 == 1:
-       # Label(text="select Country").pack()
-        print('run file Country')
-        Input('Country')
-    ch7 = Fruits.get()
-    if ch7 == 1:
-      #  Label(text="select Fruits").pack()
-        print('run file Fruits')
-        Input('Fruits')
-    ch8 = Laptop.get()
-    if ch8 == 1:
-      #  Label(text="select Laptop").pack()
-        print('run file Laptop')
-        Input('Laptop')
-
 def showMainMenu():
     global mainmenu
     global pinPhoto1
-    #global x
-    #x=1
-    #print(x)
     mainmenu = Tk()
 
     mainmenu.title("Game")
@@ -314,33 +78,31 @@ def showMainMenu():
     global validateLogin
     validateLogin = partial(validateLogin, username)
     
-   # button_1 = Button(text="PLAY",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showPlaygame()]).place(x=537, y=175)
-    button_1 = Button(text="PLAY",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showPlaygame()]).place(x=537, y=175)
+   
+    button_1 = Button(text="PLAY",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showSelectWorld()]).place(x=537, y=175)
     button_2 = Button(text="HOW TO",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showHowto()]).place(x=514, y=245)
     button_3 = Button(text="EXIT",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command = quitMainmenu).place(x=539, y=315)
-    #button_song = Button(text="song",fg="red",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command = play).place(x=905, y=340)
-    #play()
+
     mainmenu.mainloop()
-    
-   # lambda:[mainmenu.mainloop()]
+
 def play():
     winsound.PlaySound('s1.wav',winsound.SND_ASYNC)
 
-def showPlaygame():
-    global playgame
-    playgame = Tk()
-    playgame.title('PLAY')
-    playgame.geometry('1000x400')
-    playgame.resizable(width=False, height=False)
+def showSelectWorld():
+    global selectworld
+    selectworld = Tk()
+    selectworld.title('PLAY')
+    selectworld.geometry('1000x400')
+    selectworld.resizable(width=False, height=False)
 
-    pinPhotomode = Label(playgame,bg = "#E9E8C8")
+    pinPhotomode = Label(selectworld,bg = "#E9E8C8")
     pinPhotomode.place(x = 0, y = 0)
     image=Image.open("pic/mode.png")
     picture = ImageTk.PhotoImage(image)
     pinPhotomode["image"] = picture
     pinPhotomode.image = picture
 
-    user = Label(playgame,text = username.get()+"    Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
+    user = Label(selectworld,text = username.get()+"    Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
     global Adjective
     Adjective = IntVar()
     Checkbutton(text = "Adjective",fg="#FAAF30",font=('Tahoma', 10, 'bold'),bg="#FFF6F0",activebackground='#FFF6F0',activeforeground="red",variable = Adjective).place(x=100,y=120)
@@ -366,11 +128,8 @@ def showPlaygame():
     Laptop = IntVar()
     Checkbutton(text = "Laptop",fg="#FAAF30",font=('Tahoma', 10, 'bold'),bg="#FFF6F0",activebackground='#FFF6F0',activeforeground="red",variable = Laptop).place(x=320,y=330)
 
-    myLable5 = Button(text="PLAY",fg="#FFF6F0",font=('Tahoma', 20, 'bold'),bg="#FAAF30",activebackground='#FFF6F0',activeforeground="#FAAF30",command=lambda:[Check(),showgame()]).place(x=880, y=320)
-    playgame.mainloop()
-
-def hide(x):
-    x.pack_forget()
+    myLable5 = Button(text="PLAY",fg="#FFF6F0",font=('Tahoma', 20, 'bold'),bg="#FAAF30",activebackground='#FFF6F0',activeforeground="#FAAF30",command=lambda:[quitSelectWorld(),showGame()]).place(x=880, y=320)
+    selectworld.mainloop()
 
 def showHowto():
     global howto
@@ -397,38 +156,212 @@ def showWindowMenu3():
     window3.geometry("1000x400")
     window3.resizable(width=False, height=False)
     window3.mainloop()
-def showgame():
-    window4 =Tk()
-    window4.title("GAME")
-    window4.geometry("1000x400")
-    window4.resizable(width=False, height=False)
-    userplay = Label(window4,text = username.get()+"    Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
-    window4.mainloop()
-  
+    
+# ===============================================================================================
+def onKeyPress(event):
+    print("Key press : ",event.char)
+    global index
+    global ip
+    global word
+    special_characters = "!@#$%^&*()-+?_=,<>/."
+    #   checkisalpha            checkisspacebar     checkisnumber                checkisspecial_char
+    if event.char.isalpha() or event.char == ' ' or event.char.isnumeric() or event.char in special_characters:
+        if index != len(word):
+            ip += event.char
+            if event.char == word[index]:
+                Label(showgame, text=word[index], font='30', fg='black', bg = "#E9E8C8").grid(row=3, column=index)
+            else:
+                Label(showgame, text=word[index], font='30', fg='red', bg = "#E9E8C8").grid(row=3, column=index)
+            index += 1
 
+def pressBackSpace(event):
+    global index
+    global ip
+    global word
+    print("Key press : BackSpace")
+    if index != 0:
+        index -= 1
+        ip = ip[:-1]
+        Label(showgame, text=word[index], font='30', fg='grey', bg = "#E9E8C8").grid(row=3, column=index)
 
-def main():
-    animation = App(game)
-    inp = GameInput(game)
-   
+def pressEnter(event):
+    global index
+    global num
+    global word
+    global ip
+    global start_pic
+    start_pic = False
+    Label(showgame, text='                   ',font = '30', bg = "#E9E8C8").place(x=0, y=35)
+    if ip == word:
+        Label(showgame,text='correct',fg = 'green',font = '30', bg = "#E9E8C8").place(x=0,y=35)
+        #animation.playstage_good()
+    else: 
+        Label(showgame,text='not correct',fg = 'red',font = '30', bg = "#E9E8C8").place(x=0,y=35)
+        #animation.playstage_bad()
+    ip = ''
+    index = 0
+    #worldWords.showWorld()
+    #inp.showWord()
 
-    game.bind("<Return>", inp.pressEnter)
-    game.bind("<BackSpace>", inp.pressBackSpace)
-    game.bind("<KeyPress>", inp.onKeyPress)
+def nothing(event):
+    print('shift')
+        
+# ===============================================================================================
+        
+    
+def showGame():
+    global showgame
+    showgame = Tk()
+    showgame.title("GAME")
+    showgame.geometry("1000x400")
+    showgame.resizable(width=False, height=False)
+    showgame.focus_force()
+    countdowntime(20)
+    userplay = Label(showgame,text = username.get()+"    Score :     "+str(score),fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0").place(x=0,y=0)
+    
+    Check()
+    
+    #inp = GameInput(showgame)
+    
+    showgame.bind("<Return>", pressEnter)
+    showgame.bind("<BackSpace>", pressBackSpace)
+    showgame.bind('<KeyPress-Shift_L>',nothing) #กดShiftแล้วมันเข้า sp char ด้วย เลยต้องดัก shift ไว้ตรงนี้
+    showgame.bind('<KeyPress-Shift_R>',nothing)
+    showgame.bind("<KeyPress>",onKeyPress)
+    
+    showWorld()
+    
+    showgame.mainloop()
+    
+def Check():
+    ch1 = Adjective.get()
+    if ch1 == 1:
+        print('World select: Adjective')
+        Input('Adjective')
+    ch2 = Animal.get()
+    if ch2 == 1:
+        print('World select: Animal')
+        Input('Animal')
+    ch3 = CarBrandName.get()
+    if ch3 == 1:
+        print('World select: CarID_Model')
+        Input('CarID_Model')
+    ch4 = CarID_Model.get()
+    if ch4 == 1:
+        print('World select: CarID_Model')
+        Input('CarID_Model')
+    ch5 = CarModel.get()
+    if ch5 == 1:
+        print('World select: CarModel')
+        Input('CarModel')
+    ch6 = Country.get()
+    if ch6 == 1:
+        print('World select: Country')
+        Input('Country')
+    ch7 = Fruits.get()
+    if ch7 == 1:
+        print('World select: Fruits')
+        Input('Fruits')
+    ch8 = Laptop.get()
+    if ch8 == 1:
+        print('World select: Laptop')
+        Input('Laptop')
 
-    game.title("Noodle game")
-    game.geometry("1000x800")
+        
+def Input(group):
+    print("Load World : ",group)
+    fileName = group
+    asyncio.run(worldSelect(deeee, worldSearch(fileName)))
+    
+# ===============================================================================================
 
-    game.config(bg = "#E9E8C8")
+async def worldSelect(obj,fileName) :
+    if fileName is not None :
+        with open('DataWorld/AllWorld/'+fileName+'.csv', newline='') as f:
+            reader = csv.reader(f)
+            temp = list(reader)
+            while len(temp) != 0:
+                pos = randbelow(len(temp))
+                # output type
+                await obj.put(temp[pos])
+                #await obj.put(ConvertString(showStr(temp[pos])))
+                del temp[pos]
+            
+        print(f'World : {fileName} --- Finish!')
+    else:
+        print("Not found")
+        return -1
+    
+def worldSearch(inpFileName):
+    csvFiles = []
+    for file in glob.glob('DataWorld/AllWorld/*.csv'):
+        directory = file.replace('DataWorld/AllWorld\\', '')
+        directory =directory.replace('.csv', '')
+        csvFiles.append(directory)
+    print(csvFiles)
+    for i in range(len(csvFiles)):
+        if str(csvFiles[i]) == str(inpFileName):
+            return csvFiles[i]
+        else :
+            if i == (len(csvFiles)-1):
+                return None
+            else: pass
+            
+async def getWorld(obj):
+    obj.shuffle()
+    while not obj.empty():
+        tempGet = await obj.get()
+        return tempGet
+    
+def showWorld():
+    global word
+    word = asyncio.run(getWorld(deeee))[0]
+    print(f'Get word = {word}')
+    
+    for count in range(0,20):
+        Label(showgame, text=' ', font='30',bg = "#E9E8C8").grid(row = 3, column = count)
+    for count in range(0,len(word)):
+        Label(showgame,text=word[count],font = '30',fg = 'grey',bg = "#E9E8C8").grid(row = 3,column = count)
+    Label(showgame, text='                                                                           ', font='30', bg = "#E9E8C8").place(x=0, y=90)
+    
+def countdowntime(count_time):
+    labeltime = Label(showgame,text=count_time,font = '20',background="#E9E8C8").place(x=930,y=0)
 
-# animation.playsong()
-    animation.countdowntime(15)
-    game.mainloop()
+    if(count_time==9):  #แก้บัค:ตัวเลขซ้อน 
+        Label(text="9 ",font = '20',bg="#E9E8C8").place(x=933,y=0)
+    
+    if(count_time > 0):
+        showgame.after(1000,countdowntime,count_time-1)
 
+    else:
+        confirm = tkinter.messagebox.showerror("Game Over !","press ok to exit")
+        if(confirm=="ok"):
+            showgame.destroy()
+            
+# ===============================================================================================
+    
+# ออกจากหน้าแต่ละหน้า
+def quitMainmenu():
+        mainmenu.destroy()
+def quitHowto():
+        howto.destroy()
+def quitSelectWorld():
+        selectworld.destroy()
+def quitShowgame():
+        showgame.destroy()
+        
+def highscore_read():
+    with open('highscores.txt', 'r') as f:
+        for line in f:
+            print(line.split())
 
-#https://stackoverflow.com/questions/23949906/highscores-using-python-saving-10-highscores-and-ordering-them 
+def highscore_write():
+    with open('highscores.txt', 'r') as f:
+        for line in f:
+            print(line.split())
 
-#-----------------------------------------------Main
-score = 0
-play()
-showMainMenu()
+# จุดเริ่มต้นโปรแกรม
+if __name__ == '__main__':
+    score = 0
+    play()
+    showMainMenu()
