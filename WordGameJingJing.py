@@ -172,11 +172,18 @@ def showMainMenu():
     validateLogin = partial(validateLogin, username)
     
    
-    button_1 = Button(text="PLAY",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showSelectWorld()]).place(x=537, y=175)
+    button_1 = Button(text="PLAY",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),bugname()]).place(x=537, y=175)
     button_2 = Button(text="HOW TO",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[quitMainmenu(),showHowto()]).place(x=514, y=245)
     button_3 = Button(text="EXIT",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command = quitMainmenu).place(x=539, y=315)
+    
 
     mainmenu.mainloop()
+
+def bugname():
+    if username.get() == '':
+        showMainMenu()
+    else:
+        showSelectWorld()
 
 def play():
     winsound.PlaySound('s1.wav',winsound.SND_LOOP+winsound.SND_ASYNC)
@@ -221,10 +228,22 @@ def showSelectWorld():
     Laptop = IntVar()
     Checkbutton(text = "Laptop",fg="#FAAF30",font=('Tahoma', 10, 'bold'),bg="#FFF6F0",activebackground='#FFF6F0',activeforeground="red",variable = Laptop).place(x=320,y=330)
 
-    myLable5 = Button(text="PLAY",fg="#FFF6F0",font=('Tahoma', 20, 'bold'),bg="#FAAF30",activebackground='#FFF6F0',activeforeground="#FAAF30",command=lambda:[quitSelectWorld(),showGame()]).place(x=880, y=320)
+    myLable5 = Button(text="PLAY",fg="#FFF6F0",font=('Tahoma', 20, 'bold'),bg="#FAAF30",activebackground='#FFF6F0',activeforeground="#FAAF30",command=lambda:[quitSelectWorld(),bugmode()]).place(x=880, y=320)
     back = Button(text="BACK",fg="#FAAF30",font=('Tahoma', 20, 'bold'),bg="#FFF6F0",activebackground='#FAAF30',activeforeground="#FFF6F0",command=lambda:[backmain(),showMainMenu()]).place(x=750, y=320)
     selectworld.mainloop()
-    
+def bugmode():
+    ch1 = Adjective.get()
+    ch2 = Animal.get()
+    ch3 = CarBrandName.get()
+    ch4 = CarID_Model.get()
+    ch5 = CarModel.get()
+    ch6 = Country.get()
+    ch7 = Fruits.get()
+    ch8 = Laptop.get()
+    if (ch1==0 and ch2 == 0 and ch3 == 0 and ch4 == 0 and ch5 == 0 and ch6 == 0 and ch7 == 0 and ch8 == 0):
+        showSelectWorld()
+    else:
+        showGame()
     
 def showHowto():
     global howto
@@ -339,37 +358,46 @@ def showGame():
     
 def Check():
     ch1 = Adjective.get()
+    ch2 = Animal.get()
+    ch3 = CarBrandName.get()
+    ch4 = CarID_Model.get()
+    ch5 = CarModel.get()
+    ch6 = Country.get()
+    ch7 = Fruits.get()
+    ch8 = Laptop.get()
+
     if ch1 == 1:
         print('World select: Adjective')
         Input('Adjective')
-    ch2 = Animal.get()
+
     if ch2 == 1:
         print('World select: Animal')
         Input('Animal')
-    ch3 = CarBrandName.get()
+
     if ch3 == 1:
         print('World select: CarID_Model')
         Input('CarID_Model')
-    ch4 = CarID_Model.get()
+
     if ch4 == 1:
         print('World select: CarID_Model')
         Input('CarID_Model')
-    ch5 = CarModel.get()
+
     if ch5 == 1:
         print('World select: CarModel')
         Input('CarModel')
-    ch6 = Country.get()
+
     if ch6 == 1:
         print('World select: Country')
         Input('Country')
-    ch7 = Fruits.get()
+        
     if ch7 == 1:
         print('World select: Fruits')
         Input('Fruits')
-    ch8 = Laptop.get()
+       
     if ch8 == 1:
         print('World select: Laptop')
         Input('Laptop')
+
 
         
 def Input(group):
@@ -459,6 +487,7 @@ def countdowntime(count_time):
         if(check_username == False): #ถ้าไม่มีอยู่แล้วให้ใส่ชื่อเข้าไปใหม่
             scoredatatmp.append([username.get(), str(score)])
 
+
         with open('score.txt', 'w') as f: #เขียนข้อมูลใน list ที่เก็บ scoredatatmp ไว้ลง txt
             for item in scoredatatmp:
                 f.write(item[0] + "  " + item[1]+"\n")
@@ -496,5 +525,5 @@ def highscore_write():
 if __name__ == '__main__':
     score = 0
     scoreData = createStack()
-    play()
+    #play()
     showMainMenu()
